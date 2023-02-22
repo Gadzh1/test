@@ -70,3 +70,4 @@ else:
 
 for i in get_actions_results(actions):
     print(i)
+print(1)
