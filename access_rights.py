@@ -32,42 +32,48 @@ def get_actions_results(listt: list):
 
 
 actions = []
+files = []
+actions_for_files = []
+
+w = 'W'
+r = 'R'
+x = 'X'
+
 n = int(input('Введите количество файлов '))
+
+for i in range(n):
+    file = input('Введите название файла и что с ним можно сделать ')
+    if len(file.split()) > 4:
+        print('Слишком много значений')
+        break
+    if len(file.split()) == 4:
+        files.append(File(file.split()[0], True, True, True))
+
+    elif len(file.split()) == 3:
+        if w in file and r in file:
+            files.append(File(file.split()[0], True, True))
+        elif w in file and x in file:
+            files.append(File(file.split()[0], True, False, True))
+        elif r in file and x in file:
+            files.append(File(file.split()[0], False, True, True))
+    elif w in file:
+        files.append(File(file.split()[0], True))
+    elif r in file:
+        files.append(File(file.split()[0], False, True))
+    elif x in file:
+        files.append(File(file.split()[0], False, False, True))
+
 m = int(input('Введите количество действий '))
+for i in range(m):
+    actions_for_files.append(input('Введите действие и над каким файлом оно воспроизводится '))
+
+for a in actions_for_files:
+    for f in files:
+        if a.split()[1] == f.name:
+            actions.append((a.split()[0], f))
 
 
-for n in range(n):
-    for m in range(m):
-        name = input('Введите название файла и что с ним можно делать ')
-        w = 'W'
-        r = 'R'
-        x = 'X'
-        action = input('Введите действие ')
-        if len(name.split()) > 4:
-            print('Слишком много значений')
-            break
-        if len(name.split()) == 4:
-            actions.append((action, File(name.split()[0], True, True, True)))
-
-        if len(name.split()) == 3:
-
-            if w in name and r in name:
-                actions.append((action, File(name.split()[0], True, True)))
-            elif w in name and x in name:
-                actions.append((action, File(name.split()[0], True, False, True)))
-            elif r in name and x in name:
-                actions.append((action, File(name.split()[0], False, True, True)))
-
-        elif w in name:
-            actions.append((action, File(name.split()[0], True)))
-        elif r in name:
-            actions.append((action, File(name.split()[0], False, True)))
-        elif x in name:
-            actions.append((action, File(name.split()[0], False, False, True)))
-else:
-    print('не указано что можно делать с файлом')
 
 
 for i in get_actions_results(actions):
     print(i)
-print(1)
