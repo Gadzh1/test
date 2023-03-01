@@ -46,34 +46,15 @@ for i in range(n):
     if len(file.split()) > 4:
         print('Слишком много значений')
         break
-    if len(file.split()) == 4:
-        files.append(File(file.split()[0], True, True, True))
-
-    elif len(file.split()) == 3:
-        if w in file and r in file:
-            files.append(File(file.split()[0], True, True))
-        elif w in file and x in file:
-            files.append(File(file.split()[0], True, False, True))
-        elif r in file and x in file:
-            files.append(File(file.split()[0], False, True, True))
-    elif w in file:
-        files.append(File(file.split()[0], True))
-    elif r in file:
-        files.append(File(file.split()[0], False, True))
-    elif x in file:
-        files.append(File(file.split()[0], False, False, True))
+    files.append(File(file.split()[0], w in file, r in file, x in file))
 
 m = int(input('Введите количество действий '))
-for i in range(m):
-    actions_for_files.append(input('Введите действие и над каким файлом оно воспроизводится '))
 
-for a in actions_for_files:
+for _ in range(m):
+    a = input('Введите действие и над каким файлом оно воспроизводится ')
     for f in files:
         if a.split()[1] == f.name:
             actions.append((a.split()[0], f))
-
-
-
 
 for i in get_actions_results(actions):
     print(i)
